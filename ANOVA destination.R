@@ -12,89 +12,101 @@ library(emmeans)# 데이터 불러오기
 library(agricolae)
 library(multcomp)
 library(PMCMRplus)
+library(nortest)
+library(rstatix) # Kruskal-Wallis 검정을 위한 패키지
+library(dunn.test)
+
 
 # Destination0
-data <- read_excel("C:/Users/심민기/OneDrive - 부경대학교/바탕 화면/데이터 정리.xlsx")
-
+data <- read_excel("C:/Users/심민기/OneDrive - 부경대학교/바탕 화면/Updated_데이터 정리.xlsx")
 
 # 데이터 구조 확인
 str(data)
 
 data$Level <- as.factor(data$Level)
 
-# ANOVA 분석 수행
-# FirstReachTime에 대한 ANOVA
-first_reach_anova <- aov(FirstReachTime ~ Level, data = data)
+# LastReachTime에 대한 비모수 검정
 
-print(first_reach_anova)
+shapiro.test(data$FirstReachTime)
 
-summary(first_reach_anova)
+kruskal_result <- kruskal_test(FirstReachTime ~ Level, data = data)
 
-bonferroni_test <- glht(first_reach_anova, linfct = mcp(Level = "Tukey"))
+print(kruskal_result)
 
-# 결과 요약 및 출력
-summary(bonferroni_test)
+dunn_result <- dunn.test(data$FirstReachTime, g = data$Level, method = "bonferroni")
 
-# LastReachTime에 대한 ANOVA
-last_reach_anova <- aov(LastReachTime ~ Level, data = data)
+# 결과 출력
+print(dunn_result)
 
-summary(last_reach_anova)
+# LastReachTime에 대한 비모수 검정
 
-bonferroni_test <- glht(last_reach_anova, linfct = mcp(Level = "Tukey"))
-
-# 결과 요약 및 출력
-summary(bonferroni_test)
+shapiro.test(data$LastReachTime)
 
 
+kruskal_result <- kruskal_test(LastReachTime ~ Level, data = data)
 
-# AverageReachTime에 대한 ANOVA
-average_reach_anova <- aov(AverageReachTime ~ Level, data = data)
-summary(average_reach_anova)
+print(kruskal_result)
 
-average_reach_anova <- glht(last_reach_anova, linfct = mcp(Level = "Tukey"))
+dunn_result <- dunn.test(data$LastReachTime, g = data$Level, method = "bonferroni")
 
-# 결과 요약 및 출력
-summary(average_reach_anova)
 
+
+
+# AverageReachTime에 대한 비모수 검정
+
+shapiro.test(data$AverageReachTime)
+
+kruskal_result <- kruskal_test(AverageReachTime ~ Level, data = data)
+
+print(kruskal_result)
+
+
+dunn_result <- dunn.test(data$AverageReachTime, g = data$Level, method = "bonferroni")
 
 # Destination1
 
-data <- read_excel("C:/Users/심민기/OneDrive - 부경대학교/바탕 화면/데이터 정리 2.xlsx")
+data <- read_excel("C:/Users/심민기/OneDrive - 부경대학교/바탕 화면/Updated_데이터 정리 2.xlsx")
 
 # 데이터 구조 확인
 str(data)
 
 data$Level <- as.factor(data$Level)
 
-# ANOVA 분석 수행
-# FirstReachTime에 대한 ANOVA
-first_reach_anova <- aov(FirstReachTime ~ Level, data = data)
+# LastReachTime에 대한 비모수 검정
 
-summary(first_reach_anova)
+shapiro.test(data$FirstReachTime)
 
-# 본페르니 사후검정
-bonferroni_test <- glht(last_reach_anova, linfct = mcp(Level = "Tukey"))
+kruskal_result <- kruskal_test(FirstReachTime ~ Level, data = data)
 
-# 결과 요약 및 출력
-summary(bonferroni_test)
+print(kruskal_result)
 
-# LastReachTime에 대한 ANOVA
-last_reach_anova <- aov(LastReachTime ~ Level, data = data)
-summary(last_reach_anova)
+dunn_result <- dunn.test(data$FirstReachTime, g = data$Level, method = "bonferroni")
 
-bonferroni_test <- glht(last_reach_anova, linfct = mcp(Level = "Tukey"))
+# 결과 출력
+print(dunn_result)
 
-# 결과 요약 및 출력
-summary(bonferroni_test)
+# LastReachTime에 대한 비모수 검정
+
+shapiro.test(data$LastReachTime)
 
 
+kruskal_result <- kruskal_test(LastReachTime ~ Level, data = data)
 
-# AverageReachTime에 대한 ANOVA
-average_reach_anova <- aov(AverageReachTime ~ Level, data = data)
-summary(average_reach_anova)
+print(kruskal_result)
 
-average_reach_anova <- glht(last_reach_anova, linfct = mcp(Level = "Tukey"))
+dunn_result <- dunn.test(data$LastReachTime, g = data$Level, method = "bonferroni")
 
-# 결과 요약 및 출력
-summary(average_reach_anova)
+
+
+
+# AverageReachTime에 대한 비모수 검정
+
+shapiro.test(data$AverageReachTime)
+
+kruskal_result <- kruskal_test(AverageReachTime ~ Level, data = data)
+
+print(kruskal_result)
+
+
+dunn_result <- dunn.test(data$AverageReachTime, g = data$Level, method = "bonferroni")
 
